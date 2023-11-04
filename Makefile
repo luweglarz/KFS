@@ -18,6 +18,7 @@ CC_FLAGS = 	-fno-builtin \
 			-fno-rtti \
 			-nostdlib \
 			-nodefaultlibs \
+			-ffreestanding  \
 			-m32 
 
 OBJS := $(wildcard *.o)
@@ -27,8 +28,8 @@ all: $(ISO_NAME)
 $(EXEC_FILE):
 	@echo "$(GREEN)Compiling the elf file$(NC)"
 	$(ASM) $(ASM_FLAGS) src/boot.s -o boot.o
-	$(CC) $(CC_FLAGS) -I./include -g -c src/main.c -o main.o
-	ld -melf_i386 -T linker/linker.ld main.o boot.o 
+	$(CC) $(CC_FLAGS) -I./include -g -c src/main.c -o main.o -ggdb
+	ld -melf_i386 -T linker/linker.ld boot.o main.o
 
 $(ISO_NAME): $(EXEC_FILE)
 	@echo "$(GREEN)Building the ISO image$(NC)"

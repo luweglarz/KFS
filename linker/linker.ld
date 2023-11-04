@@ -5,19 +5,10 @@ ENTRY(start_kernel)
 SECTIONS {
     . = 0x00100000; 
 
-    .multiboot_header ALIGN (0x1000) :
-    {
-
-    }
-
     .text ALIGN (0x1000) :
     {
+        *(.multiboot_header)
         *(.text)
-    }
-
-    .data ALIGN (0x1000) :
-    {
-        *(.data)
     }
 
     .bss ALIGN (0x1000) :
