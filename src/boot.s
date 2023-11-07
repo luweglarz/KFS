@@ -16,9 +16,8 @@ extern main
 global start_kernel
 
 start_kernel:
-  mov esp, stack_floor ; ESP point to the bottom of the stack
+  mov esp, stack_floor 
   call main
-  hlt
 
 section .bss:
 stack_floor resb STACK_SIZE ; Allocate 4KB for the stack

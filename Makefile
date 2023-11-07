@@ -21,15 +21,20 @@ CC_FLAGS = 	-fno-builtin \
 			-ffreestanding  \
 			-m32 
 
-OBJS := $(wildcard *.o)
+SRCS := $(wildcard ./src/*.c)
+
+OBJS = $(SRCS:.c=.o)
+
+.c.o:
+	$(ASM) $(ASM_FLAGS) src/boot.s -o boot.o
+	$(CC) $(CC_FLAGS) -I./include -c $< -o $@ -ggdb
+	mv *.o src
 
 all: $(ISO_NAME)
 
-$(EXEC_FILE):
+$(EXEC_FILE): $(OBJS)
 	@echo "$(GREEN)Compiling the elf file$(NC)"
-	$(ASM) $(ASM_FLAGS) src/boot.s -o boot.o
-	$(CC) $(CC_FLAGS) -I./include -g -c src/main.c -o main.o -ggdb
-	ld -melf_i386 -T linker/linker.ld boot.o main.o
+	ld -melf_i386 -T linker/linker.ld src/boot.o $(OBJS)
 
 $(ISO_NAME): $(EXEC_FILE)
 	@echo "$(GREEN)Building the ISO image$(NC)"
@@ -43,10 +48,10 @@ run-iso: $(ISO_NAME)
 	qemu-system-i386 -cdrom $(ISO_NAME)
 
 run-iso-debug: $(ISO_NAME)
-	qemu-system-i386 -s -S -cdrom $(ISO_NAME)
+	qemu-system-i386  -s -S -cdrom $(ISO_NAME)
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) src/boot.o
 	rm -f $(EXEC_FILE)
 	rm -rf iso
 	rm -f $(ISO_NAME)
