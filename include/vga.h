@@ -3,6 +3,10 @@
 
 extern unsigned short *vga_area_head;
 
+void print_ascii(char c);
+void print_string(char *str);
+void clear_screen();
+
 # define VGA_TEXT_MODE_SIZE 80 * 25
 
 # define VGA_ASCII(COLOR, BRIGHT, ASCII) ((COLOR + ((BRIGHT == 1) ? 8 : 0)) << FORE_COLOUR_OFFSET | ASCII)

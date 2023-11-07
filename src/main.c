@@ -1,7 +1,7 @@
 #include "kernel.h"
 
 int main(void){
-    print_string("42");
+    kprintf("salut\ncava");
     while(1){
     }
 }

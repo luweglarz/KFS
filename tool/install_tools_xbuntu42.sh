@@ -65,4 +65,3 @@ sudo make install-gcc -j $INSTALL_NUM_CORES
 sudo make install-target-libgcc -j $INSTALL_NUM_CORES
 
 echo "Installation complete."
-
