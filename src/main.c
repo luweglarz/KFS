@@ -2,7 +2,8 @@
 #include "vga.h"
 
 int main(void){
-    kprintf("42");
+    char buff[124];
+    kprintf(kitoa(42, buff));
     while(1){
     }
 }

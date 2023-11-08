@@ -22,3 +22,76 @@ unsigned int kprintf(char *str){
     }
     return (cnt);
  }
+
+int	kstrncmp(const char *s1, const char *s2, unsigned int n){
+	unsigned int i = 0;
+
+	while (i < n && (s1[i] != '\0' || s2[i] != '\0'))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
+
+unsigned int kstrlen(const char *s){
+	unsigned int i = 0;
+
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+void	*kmemset(void *s, int c, unsigned int n){
+	unsigned char	*ptr = (unsigned char *)s;
+	unsigned int	i = 0;
+
+	while (i < n)
+	{
+		ptr[i] = (unsigned char)c;
+		i++;
+	}
+	return (s);
+}
+
+static int	number_size(int nb)
+{
+	int	size;
+
+	size = 0;
+	if (nb <= 0)
+	{
+		size++;
+		if (nb < 0)
+			nb = nb * -1;
+	}
+	while (nb != 0)
+	{
+		nb = nb / 10;
+		size++;
+	}
+	return (size);
+}
+
+char *kitoa(int n, char *dest){
+	unsigned int size = number_size(n);
+    char         *ret_addr = dest;
+    char         *itr_addr = dest;
+
+    itr_addr[size--] = '\0';
+	if (n == 0)
+		itr_addr[0] = '0';
+	if (n < 0)
+	{
+		itr_addr[0] = '-';
+		n = n * -1;
+	}
+	while (n != 0)
+	{
+		itr_addr[size] = (n % 10) + '0';
+		n = n / 10;
+		itr_addr--;
+	}
+	return (ret_addr);
+}
