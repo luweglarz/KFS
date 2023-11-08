@@ -1,7 +1,8 @@
 #include "kernel.h"
+#include "vga.h"
 
 int main(void){
-    kprintf("salut\ncava");
+    kprintf("42");
     while(1){
     }
 }
