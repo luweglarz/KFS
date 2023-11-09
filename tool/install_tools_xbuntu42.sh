@@ -11,7 +11,7 @@ export export PWD_BUILD="$BUILD_DIR"
 # Install required dependencies
 sudo apt update
 sudo apt upgrade
-sudo apt install -y bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm xorriso mtools gcc nasm binutils make util-linux grub2-common e2fsprogs fdisk bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo wget
+sudo apt install -y build-essential bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm xorriso mtools gcc nasm binutils make util-linux grub2-common e2fsprogs fdisk bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo wget
 
 # Create a directory for the cross-compiler and navigate to it
 cd 
