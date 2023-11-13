@@ -142,3 +142,4 @@ static void idt_set_gate(unsigned char num, unsigned long base, unsigned short s
 	idt_entries[num].selector     = sel;
 	idt_entries[num].zero = 0;
 	idt_entries[num].flags   = flags | 0x60;
+}
