@@ -16,9 +16,28 @@ struct gdt_ptr_struct
 {
    unsigned short limit;              
    unsigned long  base;            
-}
- __attribute__((packed));
+}  __attribute__((packed));
 typedef struct gdt_ptr_struct gdt_ptr_t;
+
+struct idt_entry_struct
+{
+   unsigned short base_low;            
+   unsigned short selector;            
+   unsigned char  zero;             
+   unsigned char  flags;
+   unsigned short base_high;          
+
+} __attribute__((packed));
+typedef struct idt_entry_struct idt_entry_t;
+
+
+struct idt_ptr_struct
+{
+   unsigned short limit;              
+   unsigned long  base;            
+}  __attribute__((packed));
+typedef struct idt_ptr_struct idt_ptr_t;
+
 
 void init_descriptor_tables();
 

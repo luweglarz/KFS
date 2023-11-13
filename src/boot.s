@@ -15,6 +15,8 @@ extern main
 
 global start_kernel
 global gdt_flush
+global idt_flush
+
 
 start_kernel:
   call main
@@ -31,4 +33,9 @@ gdt_flush:
    mov ss, ax
    jmp 0x08:.flush   
 .flush:
+   ret
+
+idt_flush:
+   mov eax, [esp+4]
+   lidt [eax]
    ret
