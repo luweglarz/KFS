@@ -1,6 +1,9 @@
 #ifndef DESCRIPTOR_TABLES_H
 # define DESCRIPTOR_TABLES_H
 
+#include "kernel.h"
+
+
 struct gdt_entry_struct
 {
    unsigned short limit_low;           
@@ -40,6 +43,21 @@ typedef struct idt_ptr_struct idt_ptr_t;
 
 
 void init_descriptor_tables();
+
+static inline void outb(unsigned short port, unsigned char val)
+{
+    asm volatile ( "outb %0, %1" : : "a"(val), "Nd"(port) : "memory");
+}
+
+static inline unsigned char inb(unsigned short port)
+{
+    unsigned char ret;
+    asm volatile ( "inb %1, %0"
+                   : "=a"(ret)
+                   : "Nd"(port)
+                   : "memory");
+    return ret;
+}
 
 extern void isr0 ();
 extern void isr1 ();

@@ -61,20 +61,6 @@ static void init_idt()
 
 	kmemset(&idt_entries, 0, sizeof(idt_entry_t)*256);
 
-	outb(0x20, 0x11);
-	outb(0xA0, 0x11);
-
-	outb(0x21, 0x20);
-	outb(0xA1, 0x28);
-
-	outb(0x21, 0x04);
-	outb(0xA1, 0x02);
-
-	outb(0x21, 0x01);
-	outb(0xA1, 0x01);
-
-	outb(0x21, 0x0);
-	outb(0xA1, 0x0);
 
 	idt_set_gate(0, (unsigned long)isr0,0x08, 0x8E);
 	idt_set_gate(1, (unsigned long)isr1,0x08, 0x8E);
@@ -109,6 +95,18 @@ static void init_idt()
 	idt_set_gate(30, (unsigned long)isr30, 0x08, 0x8E);
 	idt_set_gate(31, (unsigned long)isr31, 0x08, 0x8E);
 
+	outb(0x20, 0x11);
+	outb(0xA0, 0x11);
+	outb(0x21, 0x20);
+	outb(0xA1, 0x28);
+	outb(0x21, 0x04);
+	outb(0xA1, 0x02);
+	outb(0x21, 0x01);
+	outb(0xA1, 0x01);
+	outb(0x21, 0x0);
+	outb(0xA1, 0x0);
+
+
 	idt_set_gate(32, (unsigned long)irq0, 0x08, 0x8E);
 	idt_set_gate(33, (unsigned long)irq1, 0x08, 0x8E);
 	idt_set_gate(34, (unsigned long)irq2, 0x08, 0x8E);
@@ -132,6 +130,7 @@ static void init_idt()
 
 
 	idt_flush((unsigned long)&idt_ptr);
+	asm volatile("sti");
 }
 
 static void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags)
