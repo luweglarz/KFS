@@ -109,7 +109,7 @@ static void init_idt()
 	idt_set_gate(30, (unsigned long)isr30, 0x08, 0x8E);
 	idt_set_gate(31, (unsigned long)isr31, 0x08, 0x8E);
 
-/*	idt_set_gate(32, (unsigned long)irq0, 0x08, 0x8E);
+	idt_set_gate(32, (unsigned long)irq0, 0x08, 0x8E);
 	idt_set_gate(33, (unsigned long)irq1, 0x08, 0x8E);
 	idt_set_gate(34, (unsigned long)irq2, 0x08, 0x8E);
 	idt_set_gate(35, (unsigned long)irq3, 0x08, 0x8E);
@@ -127,7 +127,7 @@ static void init_idt()
 	idt_set_gate(47, (unsigned long)irq15, 0x08, 0x8E);
 
 
-	idt_set_gate(128, (unsigned long)isr128, 0x08, 0x8E);
+/*	idt_set_gate(128, (unsigned long)isr128, 0x08, 0x8E);
 	idt_set_gate(177, (unsigned long)isr177, 0x08, 0x8E);*/
 
 
