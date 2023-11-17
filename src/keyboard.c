@@ -87,8 +87,9 @@ void keyboardHandler(registers_t regs)
 {
 	unsigned char scanCode = inb(0x60) & 0x7F;
 
-	if (scanCode & 0x80)
+	if(scanCode == 0x4B || scanCode == 0x4D || scanCode == 0x48 || scanCode == 0x50)
 	{
+		// use cursor function here
 	}
 	else
 	{
