@@ -5,9 +5,9 @@ STACK_SIZE   equ 4096
 
 section .multiboot_header:
 align 4
-  dd 0x1BADB002 
-  dd 0x0
-  dd -MAGIC_NUMBER - 0x0
+  dd MAGIC_NUMBER 
+  dd FLAGS
+  dd -MAGIC_NUMBER - FLAGS
 
 section .text:
 
