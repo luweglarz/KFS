@@ -87,7 +87,7 @@ unsigned char uppercase[128] =
 
 void CapsLock_f(unsigned char scanCode)
 {
-	if (scanCode == 0x3A)
+	if (scanCode == KEY_LOCK)
 	{	
 		if(CapsLockStatus == 1)
 			CapsLock += 1;
@@ -105,7 +105,7 @@ void CapsLock_f(unsigned char scanCode)
 
 void CapsOn_f(unsigned char scanCode, unsigned char press)
 {
-	if (scanCode == 0x2A || scanCode == 0x37)
+	if (scanCode == SHIFT_LEFT || scanCode == SHIFT_RIGHT)
 	{
 		if (press == 0)
 			CapsOn = 1;
@@ -131,8 +131,8 @@ int upper_lower_case_check(unsigned char scanCode, unsigned char press)
 
 void keyboardHandler(registers_t regs)
 {
-	unsigned char scanCode = inb(0x60) & 0x7F;
-	unsigned char press = inb(0x60) & 0x80;
+	unsigned char scanCode = inb(DATA_KEYBOARD) & 0x7F;
+	unsigned char press = inb(DATA_KEYBOARD) & 0x80;
 	int ret = upper_lower_case_check(scanCode, press);
 
 	if(scanCode == CURSOR_LEFT || scanCode == CURSOR_RIGHT|| scanCode == CURSOR_UP|| scanCode == CURSOR_DOWN)

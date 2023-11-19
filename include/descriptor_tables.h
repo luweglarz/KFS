@@ -3,6 +3,7 @@
 
 #include "kernel.h"
 
+#define DATA_KEYBOARD 0x60
 
 struct gdt_entry_struct
 {
