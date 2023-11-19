@@ -2,9 +2,11 @@
 #include "vga.h"
 #include "descriptor_tables.h"
 #include "isr.h"
+#include "keyboard.h"
 
 int CapsLock = 0;
 int CapsLockStatus = 1;
+int CapsOn = 0;
 
 unsigned char lowercase[128] =
 {
@@ -50,10 +52,10 @@ unsigned char uppercase[128] =
 {
 	0,  0, '!','@','#','$','%','^','&','*','(',')','_','+','\b','\t',			/* Tab */
 	'Q','W','E','R','T','Y','U','I','O','P','{','}','\n'
-,	/* Enter key */
+		,	/* Enter key */
 	0,			/* 29   - Control */
 	'A','S','D','F','G','H','J','K','L',':','"','~',0,	/* 39 */
-	 		/* Left shift */
+	/* Left shift */
 	'|','Z','X','C', 'V','B','N','M','<','>','?',0,				/* Right shift */
 	'*',
 	0,	/* Alt */
@@ -83,37 +85,67 @@ unsigned char uppercase[128] =
 	0,	/* All other keys are undefined */
 };
 
+void CapsLock_f(unsigned char scanCode)
+{
+	if (scanCode == 0x3A)
+	{	
+		if(CapsLockStatus == 1)
+			CapsLock += 1;
+		else
+			CapsLock -= 1;
+	}
+	if(CapsLock == 2 || CapsLock == 0)
+	{
+		if (CapsLock == 2)
+			CapsLockStatus = 0;
+		else
+			CapsLockStatus = 1;
+	}
+}
+
+void CapsOn_f(unsigned char scanCode, unsigned char press)
+{
+	if (scanCode == 0x2A || scanCode == 0x37)
+	{
+		if (press == 0)
+			CapsOn = 1;
+		else
+			CapsOn = 0;
+	}
+}
+
+int upper_lower_case_check(unsigned char scanCode, unsigned char press)
+{
+	CapsLock_f(scanCode);
+	CapsOn_f(scanCode, press);
+	if (CapsOn == 1 && CapsLock == 0)
+		return 1;
+	else if(CapsOn == 0 && CapsLock == 2)
+		return 1;
+	else if(CapsOn && CapsLock == 2)
+		return 0;
+	else
+		return 0;
+
+}
+
 void keyboardHandler(registers_t regs)
 {
 	unsigned char scanCode = inb(0x60) & 0x7F;
+	unsigned char press = inb(0x60) & 0x80;
+	int ret = upper_lower_case_check(scanCode, press);
 
-	if(scanCode == 0x4B || scanCode == 0x4D || scanCode == 0x48 || scanCode == 0x50)
+	if(scanCode == CURSOR_LEFT || scanCode == CURSOR_RIGHT|| scanCode == CURSOR_UP|| scanCode == CURSOR_DOWN)
 	{
-		// use cursor function here
+		kputchar('y'); // Cursor code here	
 	}
-	else
+
+	if (lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
 	{
-		if (scanCode == 0x3A)
-		{	
-			if(CapsLockStatus == 1)
-				CapsLock += 1;
-			else
-				CapsLock -= 1;
-		}
-		if(CapsLock == 2 || CapsLock == 0)
-		{
-			if (CapsLock == 2)
-				CapsLockStatus = 0;
-			else
-				CapsLockStatus = 1;
-		}
-		if (lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
-		{
-			if(CapsLock == 2)
-				kputchar(uppercase[scanCode]);
-			else
-				kputchar(lowercase[scanCode]);
-		}
+		if(ret)
+			kputchar(uppercase[scanCode]);
+		else
+			kputchar(lowercase[scanCode]);
 	}
 }
 
