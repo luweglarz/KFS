@@ -140,8 +140,13 @@ void keyboardHandler(registers_t regs)
 	{
 		move_cursor(scanCode);
 	}
+<<<<<<< HEAD
 	
 	if (lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
+=======
+
+	if (press == 0 && lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
+>>>>>>> keyboard
 	{
 		if(ret)
 			kputchar(uppercase[scanCode]);
