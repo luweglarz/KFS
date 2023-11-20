@@ -136,17 +136,12 @@ void keyboardHandler(registers_t regs)
 	unsigned char press = inb(DATA_KEYBOARD) & 0x80;
 	int ret = upper_lower_case_check(scanCode, press);
 
-	if(scanCode == ARROW_LEFT || scanCode == ARROW_RIGHT || scanCode == ARROW_UP || scanCode == ARROW_DOWN)
+	if(press == 0 && (scanCode == ARROW_LEFT || scanCode == ARROW_RIGHT || scanCode == ARROW_UP || scanCode == ARROW_DOWN))
 	{
 		move_cursor(scanCode);
 	}
-<<<<<<< HEAD
-	
-	if (lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
-=======
 
 	if (press == 0 && lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
->>>>>>> keyboard
 	{
 		if(ret)
 			kputchar(uppercase[scanCode]);

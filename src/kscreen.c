@@ -46,13 +46,14 @@ void update_head_cursor(){
 }
 
 void move_cursor(int direction){
-    if (direction == ARROW_RIGHT)
+    cursor_pos = get_cursor_pos();
+    if (direction == ARROW_RIGHT && (cursor_pos + 1) < (VGA_HEIGHT * VGA_WIDTH) / 2)
         vga_area_head++;
-    else if (direction == ARROW_LEFT)
+    else if (direction == ARROW_LEFT && cursor_pos - 1 >= 0)
         vga_area_head--;
-    else if (direction == ARROW_UP)
-        vga_area_head -= (1 * VGA_WIDTH * 2);
-    else if (direction == ARROW_DOWN)
-        vga_area_head += (1 * VGA_WIDTH * 2);
+    else if (direction == ARROW_UP && (cursor_pos - VGA_WIDTH) >= 0)
+        vga_area_head -= VGA_WIDTH;
+    else if (direction == ARROW_DOWN && (cursor_pos + VGA_WIDTH) < (VGA_HEIGHT * VGA_WIDTH) / 2)
+        vga_area_head += VGA_WIDTH;
     update_head_cursor();
 }
