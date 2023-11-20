@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "vga.h": "c",
+        "stdint.h": "c",
+        "stdint-gcc.h": "c",
+        "descriptor_tables.h": "c"
+    }
+}

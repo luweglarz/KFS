@@ -3,6 +3,7 @@
 #include "descriptor_tables.h"
 #include "isr.h"
 #include "keyboard.h"
+#include "kscreen.h"
 
 int CapsLock = 0;
 int CapsLockStatus = 1;
@@ -135,11 +136,11 @@ void keyboardHandler(registers_t regs)
 	unsigned char press = inb(DATA_KEYBOARD) & 0x80;
 	int ret = upper_lower_case_check(scanCode, press);
 
-	if(scanCode == CURSOR_LEFT || scanCode == CURSOR_RIGHT|| scanCode == CURSOR_UP|| scanCode == CURSOR_DOWN)
+	if(scanCode == ARROW_LEFT || scanCode == ARROW_RIGHT || scanCode == ARROW_UP || scanCode == ARROW_DOWN)
 	{
-		kputchar('y'); // Cursor code here	
+		
 	}
-
+	
 	if (lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
 	{
 		if(ret)

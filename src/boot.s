@@ -1,7 +1,6 @@
 MAGIC_NUMBER equ 0x1BADB002 
 FLAGS        equ 0x0
 CHECKSUM     equ -MAGIC_NUMBER
-STACK_SIZE   equ 4096
 
 section .multiboot_header:
 align 4

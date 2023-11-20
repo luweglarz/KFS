@@ -1,9 +1,9 @@
 #ifndef VGA_H
 # define VGA_H
 
-extern unsigned short *vga_area_head;
+# include "kernel.h"
 
-void            clear_screen();
+extern uint16_t *vga_area_head;
 
 # define VGA_WIDTH 80
 # define VGA_HEIGHT 50
