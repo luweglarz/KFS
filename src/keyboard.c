@@ -140,7 +140,7 @@ void keyboardHandler(registers_t regs)
 		kputchar('y'); // Cursor code here	
 	}
 
-	if (lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
+	if (press == 0 && lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
 	{
 		if(ret)
 			kputchar(uppercase[scanCode]);
