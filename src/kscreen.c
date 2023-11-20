@@ -38,9 +38,21 @@ static uint16_t get_cursor_pos(){
 
 void update_head_cursor(){
     cursor_pos = get_cursor_pos();
+
     outb(0x3D4, 0x0E);
 	outb(0x3D5, (uint8_t) (cursor_pos >> 8) & 0xFF);
     outb(0x3D4, 0x0F);
 	outb(0x3D5, (uint8_t) cursor_pos & 0xFF);
 }
 
+void move_cursor(int direction){
+    if (direction == ARROW_RIGHT)
+        vga_area_head++;
+    else if (direction == ARROW_LEFT)
+        vga_area_head--;
+    else if (direction == ARROW_UP)
+        vga_area_head -= (1 * VGA_WIDTH * 2);
+    else if (direction == ARROW_DOWN)
+        vga_area_head += (1 * VGA_WIDTH * 2);
+    update_head_cursor();
+}

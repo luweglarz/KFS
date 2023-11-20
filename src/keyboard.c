@@ -138,7 +138,7 @@ void keyboardHandler(registers_t regs)
 
 	if(scanCode == ARROW_LEFT || scanCode == ARROW_RIGHT || scanCode == ARROW_UP || scanCode == ARROW_DOWN)
 	{
-		
+		move_cursor(scanCode);
 	}
 	
 	if (lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
