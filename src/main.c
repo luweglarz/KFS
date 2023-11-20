@@ -9,7 +9,5 @@ int main(void){
     init_descriptor_tables();
     initKeyboard();
 
-    //asm volatile ("int $0x3");
-   // asm volatile("int $0x4");
    for(;;);
 }
