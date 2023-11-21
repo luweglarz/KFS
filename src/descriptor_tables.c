@@ -1,9 +1,8 @@
 #include "descriptor_tables.h"
-#include "kernel.h"
+#include "klib.h"
 
 extern void gdt_flush(unsigned long);
 extern void idt_flush(unsigned long);
-
 
 static void init_gdt();
 static void gdt_set_gate(unsigned long, unsigned long, unsigned long, unsigned char, unsigned char);
@@ -11,14 +10,11 @@ static void gdt_set_gate(unsigned long, unsigned long, unsigned long, unsigned c
 static void init_idt();
 static void idt_set_gate(unsigned char, unsigned long, unsigned short, unsigned char);
 
-
 gdt_entry_t gdt_entries[5];
 gdt_ptr_t   gdt_ptr;
 
 idt_entry_t idt_entries[256];
 idt_ptr_t   idt_ptr;
-
-
 
 void init_descriptor_tables()
 {

@@ -17,10 +17,6 @@ global start_kernel
 global gdt_flush
 global idt_flush
 
-
-start_kernel:
-  call main
-
 gdt_flush:
    mov eax, [esp+4]  
    lgdt [eax]        
@@ -77,3 +73,6 @@ irq_common_stub:
    add esp, 8
    sti
    iret    
+
+start_kernel:
+  call main

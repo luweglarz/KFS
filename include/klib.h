@@ -16,6 +16,19 @@ unsigned int    kstrlen(const char *s);
 void	        *kmemset(void *s, int c, unsigned int n);
 char            *kitoa(int n, char *dest);
 
+static inline void outb(unsigned short port, unsigned char val)
+{
+    asm volatile ( "outb %0, %1" : : "a"(val), "Nd"(port) : "memory");
+}
 
+static inline unsigned char inb(unsigned short port)
+{
+    unsigned char ret;
+    asm volatile ( "inb %1, %0"
+                   : "=a"(ret)
+                   : "Nd"(port)
+                   : "memory");
+    return ret;
+}
 
 #endif

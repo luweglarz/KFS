@@ -1,5 +1,5 @@
 #include "vga.h"
-#include "kernel.h"
+#include "klib.h"
 #include "descriptor_tables.h"
 #include "keyboard.h"
 
@@ -12,7 +12,7 @@ void clear_screen(){
     while (y < VGA_HEIGHT){
         x = 0;
         while (x < VGA_WIDTH){
-            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(BLACK_COLOUR, 0);
+            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(BLACK_COLOR, 0);
             x++;
         }
         y++;

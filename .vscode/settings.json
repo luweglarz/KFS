@@ -1,9 +1,12 @@
 {
     "files.associations": {
-        "kernel.h": "c",
+        "klib.h": "c",
         "vga.h": "c",
         "stdint.h": "c",
         "stdint-gcc.h": "c",
-        "descriptor_tables.h": "c"
+        "descriptor_tables.h": "c",
+        "isr.h": "c",
+        "kscreen.h": "c",
+        "keyboard.h": "c"
     }
 }

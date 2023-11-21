@@ -1,6 +1,6 @@
 #include "descriptor_tables.h"
 #include "isr.h"
-#include "kernel.h"
+#include "klib.h"
 
 extern void irq_handler(registers_t);
 isr_t interrupt_handlers[256];

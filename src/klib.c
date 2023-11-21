@@ -5,7 +5,7 @@
 void kputchar(char c){
     if (vga_area_head == (unsigned short*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
         return ;
-    *vga_area_head = VGA_ASCII(BLUE_COLOUR, 0, c);
+    *vga_area_head = VGA_ASCII(BLUE_COLOR, 0, c);
 	move_cursor(ARROW_RIGHT);
  }
 

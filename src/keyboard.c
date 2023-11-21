@@ -1,12 +1,12 @@
-#include "kernel.h"
+#include "klib.h"
 #include "vga.h"
 #include "descriptor_tables.h"
 #include "isr.h"
 #include "keyboard.h"
 #include "kscreen.h"
 
-int CapsLock = 0;
-int CapsOn = 0;
+int caps_lock = 0;
+int caps_on = 0;
 
 unsigned char lowercase[128] =
 {
@@ -85,66 +85,65 @@ unsigned char uppercase[128] =
 	0,	/* All other keys are undefined */
 };
 
-void CapsLock_f(unsigned char scanCode, unsigned char press)
+static void caps_lock_f(unsigned char scan_code, unsigned char press)
 {
-	if (scanCode == KEY_LOCK && press == 0)
+	if (scan_code == KEY_LOCK && press == 0)
 	{
-		if(CapsLock == 0)
-			CapsLock = 1;
+		if(caps_lock == 0)
+			caps_lock = 1;
 		else
-			CapsLock = 0;
+			caps_lock = 0;
 	}
 }
 
-void CapsOn_f(unsigned char scanCode, unsigned char press)
+static void caps_on_f(unsigned char scan_code, unsigned char press)
 {
-	if (scanCode == SHIFT_LEFT || scanCode == SHIFT_RIGHT)
+	if (scan_code == SHIFT_LEFT || scan_code == SHIFT_RIGHT)
 	{
 		if (press == 0)
-			CapsOn = 1;
+			caps_on = 1;
 		else
-			CapsOn = 0;
+			caps_on = 0;
 	}
 }
 
-int upper_lower_case_check(unsigned char scanCode, unsigned char press)
+static int upper_lower_case_check(unsigned char scan_code, unsigned char press)
 {
-	CapsLock_f(scanCode, press);
-	CapsOn_f(scanCode, press);
-	if (CapsOn == 1 && CapsLock == 0)
+	caps_lock_f(scan_code, press);
+	caps_on_f(scan_code, press);
+	if (caps_on == 1 && caps_lock == 0)
 		return 1;
-	else if(CapsOn == 0 && CapsLock == 1)
+	else if(caps_on == 0 && caps_lock == 1)
 		return 1;
-	else if(CapsOn && CapsLock == 1)
+	else if(caps_on && caps_lock == 1)
 		return 0;
 	else
 		return 0;
-
 }
 
-void keyboardHandler(registers_t regs)
+void keyboard_handler(registers_t regs)
 {
-	unsigned char scanCode = inb(DATA_KEYBOARD) & 0x7F;
+	unsigned char scan_code = inb(DATA_KEYBOARD) & 0x7F;
 	unsigned char press = inb(DATA_KEYBOARD) & 0x80;
-	int ret = upper_lower_case_check(scanCode, press);
+	int ret = upper_lower_case_check(scan_code, press);
 
-	if(press == 0 && (scanCode == ARROW_LEFT || scanCode == ARROW_RIGHT || scanCode == ARROW_UP || scanCode == ARROW_DOWN))
+	if(press == 0 && (scan_code == ARROW_LEFT || scan_code == ARROW_RIGHT || scan_code == ARROW_UP || scan_code == ARROW_DOWN))
 	{
-		move_cursor(scanCode);
+		move_cursor(scan_code);
 	}
 
-	if (press == 0 && lowercase[scanCode] != 0 && lowercase[scanCode] != '\b' && lowercase[scanCode] != '\n')
+	if (press == 0 && lowercase[scan_code] != 0 && lowercase[scan_code] != '\b' && lowercase[scan_code] != '\n')
 	{
 		if(ret)
-			kputchar(uppercase[scanCode]);
+			kputchar(uppercase[scan_code]);
 		else
-			kputchar(lowercase[scanCode]);
+			kputchar(lowercase[scan_code]);
 	}
 }
 
-void initKeyboard()
+void init_keyboard()
 {
-	register_interrupt_handler(33, &keyboardHandler);
+	register_interrupt_handler(33, &keyboard_handler);
 }
 
 

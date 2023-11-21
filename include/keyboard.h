@@ -11,10 +11,7 @@
 #define SHIFT_RIGHT 0x37
 #define KEY_LOCK 0x3A
 
-
-
-
-void initKeyboard(void);
-void keyboardHandler(registers_t regs);
+void init_keyboard(void);
+void keyboard_handler(registers_t regs);
 
 #endif
