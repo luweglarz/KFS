@@ -6,7 +6,6 @@
 #include "kscreen.h"
 
 int CapsLock = 0;
-int CapsLockStatus = 1;
 int CapsOn = 0;
 
 unsigned char lowercase[128] =
@@ -86,21 +85,14 @@ unsigned char uppercase[128] =
 	0,	/* All other keys are undefined */
 };
 
-void CapsLock_f(unsigned char scanCode)
+void CapsLock_f(unsigned char scanCode, unsigned char press)
 {
-	if (scanCode == KEY_LOCK)
-	{	
-		if(CapsLockStatus == 1)
-			CapsLock += 1;
-		else
-			CapsLock -= 1;
-	}
-	if(CapsLock == 2 || CapsLock == 0)
+	if (scanCode == KEY_LOCK && press == 0)
 	{
-		if (CapsLock == 2)
-			CapsLockStatus = 0;
+		if(CapsLock == 0)
+			CapsLock = 1;
 		else
-			CapsLockStatus = 1;
+			CapsLock = 0;
 	}
 }
 
@@ -117,13 +109,13 @@ void CapsOn_f(unsigned char scanCode, unsigned char press)
 
 int upper_lower_case_check(unsigned char scanCode, unsigned char press)
 {
-	CapsLock_f(scanCode);
+	CapsLock_f(scanCode, press);
 	CapsOn_f(scanCode, press);
 	if (CapsOn == 1 && CapsLock == 0)
 		return 1;
-	else if(CapsOn == 0 && CapsLock == 2)
+	else if(CapsOn == 0 && CapsLock == 1)
 		return 1;
-	else if(CapsOn && CapsLock == 2)
+	else if(CapsOn && CapsLock == 1)
 		return 0;
 	else
 		return 0;

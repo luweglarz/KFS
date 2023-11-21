@@ -11,7 +11,5 @@ int main(void){
     initKeyboard();
     //init_cursor(0xB, 0xC); // Maybe using inb() to get Maximum Scan Line Register (Index 0x09) can be good
 
-    //asm volatile ("int $0x3");
-   // asm volatile("int $0x4");
    for(;;);
 }
