@@ -4,7 +4,6 @@
 #include "keyboard.h"
 
 uint16_t *vga_area_head = ((uint16_t*)VGA_AREA);
-uint16_t cursor_pos = 0;
 
 void clear_screen(){
     unsigned int x = 0;
@@ -36,8 +35,8 @@ static uint16_t get_cursor_pos(){
     return (cursor_pos);
 }
 
-void update_head_cursor(){
-    cursor_pos = get_cursor_pos();
+static void update_head_cursor(){
+    uint16_t cursor_pos = get_cursor_pos();
 
     outb(0x3D4, 0x0E);
 	outb(0x3D5, (uint8_t) (cursor_pos >> 8) & 0xFF);
@@ -46,7 +45,8 @@ void update_head_cursor(){
 }
 
 void move_cursor(int direction){
-    cursor_pos = get_cursor_pos();
+    uint16_t cursor_pos = get_cursor_pos();
+
     if (direction == ARROW_RIGHT && (cursor_pos + 1) < (VGA_HEIGHT * VGA_WIDTH) / 2)
         vga_area_head++;
     else if (direction == ARROW_LEFT && cursor_pos - 1 >= 0)

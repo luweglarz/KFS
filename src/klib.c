@@ -1,12 +1,12 @@
 #include "vga.h"
 #include "kscreen.h"
+#include "keyboard.h"
 
 void kputchar(char c){
     if (vga_area_head == (unsigned short*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
         return ;
     *vga_area_head = VGA_ASCII(BLUE_COLOUR, 0, c);
-    vga_area_head++;
-	update_head_cursor();
+	move_cursor(ARROW_RIGHT);
  }
 
 unsigned int kprintf(char *str){
