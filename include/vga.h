@@ -24,7 +24,6 @@ extern uint16_t *vga_area_head;
 # define GREEN_COLOR (0x2)
 # define CYAN_COLOR (0x3)
 # define RED_COLOR (0x4)
-# define RED_COLOR (0x4)
 # define MAGENTA_COLOR (0x5)
 # define BROWN_COLOR (0x6)
 # define LIGHT_GRAY_COLOR (0x7)

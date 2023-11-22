@@ -2,14 +2,14 @@
 #include "kscreen.h"
 #include "keyboard.h"
 
-void kputchar(char c){
+void kputchar(char c, int color, int bright){
     if (vga_area_head == (unsigned short*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
         return ;
-    *vga_area_head = VGA_ASCII(BLUE_COLOR, 0, c);
+    *vga_area_head = VGA_ASCII(color, bright, c);
 	move_cursor(ARROW_RIGHT);
  }
 
-unsigned int kprintf(char *str){
+unsigned int kprintf(char *str, int color, int bright){
     int cnt = 0;
 
     while (*str != '\0'){
@@ -18,7 +18,7 @@ unsigned int kprintf(char *str){
             str++;
             continue ;
         }
-        kputchar(*str);
+        kputchar(*str, color, bright);
         str++;
         cnt++;
     }

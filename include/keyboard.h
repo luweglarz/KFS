@@ -10,6 +10,8 @@
 #define SHIFT_LEFT 0x2A
 #define SHIFT_RIGHT 0x37
 #define KEY_LOCK 0x3A
+#define BACKSPACE 0x0F
+#define ENTER 0x1D
 
 void init_keyboard(void);
 void keyboard_handler(registers_t regs);
