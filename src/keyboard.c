@@ -136,9 +136,9 @@ void keyboard_handler(registers_t regs)
 	if (press == 0 && scan_code == BACKSPACE) {
 
 	}
-	
-	if(press == 0 && scan_code == ENTER) {
 
+	if(press == 0 && scan_code == ENTER) {
+		exec_cmd();
 	}
 
 	if (press == 0 && lowercase[scan_code] != 0 && lowercase[scan_code] != '\b' && lowercase[scan_code] != '\n')

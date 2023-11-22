@@ -3,7 +3,7 @@
 #include "keyboard.h"
 
 void kputchar(char c, int color, int bright){
-    if (vga_area_head == (unsigned short*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
+    if (vga_area_head == (uint16_t*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
         return ;
     *vga_area_head = VGA_ASCII(color, bright, c);
 	move_cursor(ARROW_RIGHT);
@@ -14,7 +14,7 @@ unsigned int kprintf(char *str, int color, int bright){
 
     while (*str != '\0'){
         if (*str == '\n'){
-            vga_area_head = (unsigned short*)VGA_JMP_LINE;
+            vga_area_head = (uint16_t*)VGA_JMP_LINE;
             str++;
             continue ;
         }
