@@ -134,7 +134,7 @@ void keyboard_handler(registers_t regs)
 	}
 
 	if (press == 0 && scan_code == BACKSPACE) {
-
+		remove_entry();
 	}
 
 	if(press == 0 && scan_code == ENTER) {
@@ -143,14 +143,10 @@ void keyboard_handler(registers_t regs)
 
 	if (press == 0 && lowercase[scan_code] != 0 && lowercase[scan_code] != '\b' && lowercase[scan_code] != '\n')
 	{
-		if(ret){
-			kputchar(uppercase[scan_code], LIGHT_GRAY_COLOR, 1);
+		if(ret)
 			catch_entry(uppercase[scan_code]);
-		}
-		else{
-			kputchar(lowercase[scan_code], LIGHT_GRAY_COLOR, 1);
+		else
 			catch_entry(lowercase[scan_code]);
-		}
 	}
 }
 

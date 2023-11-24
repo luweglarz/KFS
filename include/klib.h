@@ -9,6 +9,8 @@
 # define int16_t    short
 # define int32_t    int
 
+ #include "vga.h"
+
 void            kputchar(char c, int color, int bright);
 unsigned int kprintf(char *str, int color, int bright);
 int	            kstrncmp(const char *s1, const char *s2, unsigned int n);
@@ -19,6 +21,10 @@ char            *kitoa(int n, char *dest);
 static inline void outb(unsigned short port, unsigned char val)
 {
     asm volatile ( "outb %0, %1" : : "a"(val), "Nd"(port) : "memory");
+}
+
+static inline void outw(uint16_t value, uint16_t port) {
+    asm volatile ("outw %0, %1" : : "a"(value), "Nd"(port));
 }
 
 static inline unsigned char inb(unsigned short port)
