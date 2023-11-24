@@ -15,6 +15,7 @@ int	            kstrncmp(const char *s1, const char *s2, unsigned int n);
 unsigned int    kstrlen(const char *s);
 void	        *kmemset(void *s, int c, unsigned int n);
 char            *kitoa(int n, char *dest);
+void	*kmemcpy(void *dst, const void *src, unsigned int n);
 
 static inline void outb(unsigned short port, unsigned char val)
 {
@@ -30,5 +31,7 @@ static inline unsigned char inb(unsigned short port)
                    : "memory");
     return ret;
 }
+
+
 
 #endif
