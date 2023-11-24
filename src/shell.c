@@ -16,10 +16,12 @@ void catch_entry(char c){
 }
 
 void remove_entry(){
+    if (prompt.size == 0)
+        return ;
     prompt.buffer[prompt.size] = '\0';
     prompt.size--;
-    *vga_area_head = 0;
     move_cursor(ARROW_LEFT);
+    *vga_area_head = VGA_ASCII(LIGHT_GRAY_COLOR, 1, '\0');
 }
 
 void exec_cmd(){
@@ -27,7 +29,7 @@ void exec_cmd(){
 
     while (i < BUILTINS_SIZE){
         if (kstrncmp(prompt.buffer, builtin[i].name, kstrlen(builtin[i].name)) == 0 
-            && kstrlen(builtin[i].name) == kstrlen(prompt.buffer))
+            && kstrlen(builtin[i].name) == prompt.size)
             builtin[i].builtin_func();
         i++;
     }
