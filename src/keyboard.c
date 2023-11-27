@@ -4,6 +4,7 @@
 #include "isr.h"
 #include "keyboard.h"
 #include "kscreen.h"
+#include "shell.h"
 
 int caps_lock = 0;
 int caps_on = 0;
@@ -132,12 +133,20 @@ void keyboard_handler(registers_t regs)
 		move_cursor(scan_code);
 	}
 
+	if (press == 0 && scan_code == BACKSPACE) {
+		remove_entry();
+	}
+
+	if(press == 0 && scan_code == ENTER) {
+		exec_cmd();
+	}
+
 	if (press == 0 && lowercase[scan_code] != 0 && lowercase[scan_code] != '\b' && lowercase[scan_code] != '\n')
 	{
 		if(ret)
-			kputchar(uppercase[scan_code]);
+			catch_entry(uppercase[scan_code]);
 		else
-			kputchar(lowercase[scan_code]);
+			catch_entry(lowercase[scan_code]);
 	}
 }
 
