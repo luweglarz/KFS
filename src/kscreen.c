@@ -5,7 +5,7 @@
 #include "kscreen.h"
 
 uint16_t *vga_area_head = ((uint16_t*)VGA_AREA);
-int ktext_color = GREEN_COLOR;
+int ktext_color = LIGHT_GRAY_COLOR;
 int kbg_color = BLACK_COLOR;
 
 void change_bg_color(int color, int bright){

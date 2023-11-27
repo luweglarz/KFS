@@ -6,14 +6,12 @@
 
 kprompt     prompt;
 kbuiltin    builtin[BUILTINS_SIZE] = {
-    {"reboot\0", &reboot}, {"halt\0", &halt}, {"cbgcolor\0", &cbgcolor}
+    {"reboot\0", &reboot}, {"halt\0", &halt}, {"cbgcolor\0", &cbgcolor}, {"ctcolor\0", &ctcolor}
 };
-
-
 
 void catch_entry(char c){
     prompt.buffer[prompt.size] = c;
-    kputchar(prompt.buffer[prompt.size] , LIGHT_GRAY_COLOR, 1);
+    kputchar(prompt.buffer[prompt.size] , ktext_color, 1);
     prompt.size++;
 }
 

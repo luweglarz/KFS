@@ -1,6 +1,7 @@
 #include "klib.h"
 #include "kscreen.h"
 #include "builtin.h"
+#include "shell.h"
 
 void reboot()
 {
@@ -40,12 +41,19 @@ static int check_color(char *color){
 void cbgcolor(char *arg){
     int color = check_color(arg);
     if (color == -1){
-        kprintf("Wrong argument", LIGHT_GRAY_COLOR, 1);
+        kprintf("\nWrong argument", LIGHT_GRAY_COLOR, 1);
         return ;
     }
     change_bg_color(color, 0);
     kbg_color = color;
 }
 
-void ctcolor(){
+void ctcolor(char *arg){
+    int color = check_color(arg);
+
+    if (color == -1){
+        kprintf("\nWrong argument", LIGHT_GRAY_COLOR, 1);
+        return ;
+    }
+    ktext_color = color;
 }
