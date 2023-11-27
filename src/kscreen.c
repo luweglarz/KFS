@@ -2,17 +2,20 @@
 #include "klib.h"
 #include "descriptor_tables.h"
 #include "keyboard.h"
+#include "kscreen.h"
 
 uint16_t *vga_area_head = ((uint16_t*)VGA_AREA);
+int ktext_color = GREEN_COLOR;
+int kbg_color = BLACK_COLOR;
 
-void clear_screen(){
+void change_bg_color(int color, int bright){
     unsigned int x = 0;
     unsigned int y = 0;
 
     while (y < VGA_HEIGHT){
         x = 0;
         while (x < VGA_WIDTH){
-            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(BLACK_COLOR, 0);
+            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) |= VGA_BG(color, color);
             x++;
         }
         y++;

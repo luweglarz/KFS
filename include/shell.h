@@ -14,7 +14,7 @@ extern kprompt prompt;
 
 typedef struct  s_kbuiltin{
     const char    name[128];
-    void          (*builtin_func)();
+    void          (*builtin_func)(char *arg);
 }               kbuiltin;
 
 extern kbuiltin builtin[BUILTINS_SIZE];

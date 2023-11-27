@@ -6,8 +6,10 @@
 
 kprompt     prompt;
 kbuiltin    builtin[BUILTINS_SIZE] = {
-    {"reboot\0", &reboot}, {"halt\0", &halt}
+    {"reboot\0", &reboot}, {"halt\0", &halt}, {"cbgcolor\0", &cbgcolor}
 };
+
+
 
 void catch_entry(char c){
     prompt.buffer[prompt.size] = c;
@@ -30,7 +32,13 @@ void exec_cmd(){
     while (i < BUILTINS_SIZE){
         if (kstrncmp(prompt.buffer, builtin[i].name, kstrlen(builtin[i].name)) == 0 
             && kstrlen(builtin[i].name) == prompt.size)
-            builtin[i].builtin_func();
+            builtin[i].builtin_func(0);
+        if (kstrncmp(prompt.buffer, builtin[i].name, kstrlen(builtin[i].name)) == 0){
+            char *arg = prompt.buffer + kstrlen(builtin[i].name);
+            while (*arg == ' ')
+                arg++;
+            builtin[i].builtin_func(arg);
+        }
         i++;
     }
     vga_area_head = (uint16_t*)VGA_JMP_LINE;

@@ -3,5 +3,6 @@
 
 void reboot();
 void halt();
+void cbgcolor(char *arg);
 
 #endif
