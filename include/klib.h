@@ -38,6 +38,9 @@ static inline unsigned char inb(unsigned short port)
     return ret;
 }
 
-
+struct stackframe {
+	struct stackframe *ebp;
+	unsigned long eip;
+};
 
 #endif
