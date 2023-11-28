@@ -119,8 +119,8 @@ void print_stack_kernel(unsigned int MaxFrames)
 {
 	struct stackframe *stk;
 	char buff[255];
-	MaxFrames = 5;
-	asm volatile ("movl %%ebp,%0" : "=r"(stk) ::);
+	MaxFrames = 10;
+	asm volatile ("movl %%ebp,%0" : "=r"(stk) ::); // put ebp in stk struct
 	kprintf("Stack trace: ", LIGHT_GRAY_COLOR, 1);
 	for(unsigned int frame = 0; stk && frame < MaxFrames; ++frame)
 	{

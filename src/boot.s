@@ -9,11 +9,11 @@ align 4
   dd -MAGIC_NUMBER - FLAGS
 
 
-section .bss
-align 16
-stack_bottom:
-resb 16384
-stack_top:
+;;section .bss
+ ;;align 16
+;;stack_bottom:
+;;resb 16384
+;;stack_top:
 
 
 
@@ -92,6 +92,6 @@ stack_frame:
   ret
 
 start_kernel:
-  mov esp, stack_top
-  xor ebp, ebp
+;;  mov esp, stack_top
+;;  xor ebp, ebp
   call main
