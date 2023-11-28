@@ -20,7 +20,6 @@ void change_bg_color(int color, int bright){
         }
         y++;
     }
-    vga_area_head = ((uint16_t*)VGA_AREA) ;    
 }
 
 void init_cursor(uint8_t sl_start, uint8_t sl_end){

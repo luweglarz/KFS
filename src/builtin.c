@@ -57,3 +57,18 @@ void ctcolor(char *arg){
     }
     ktext_color = color;
 }
+
+void clear(){
+    unsigned int x = 0;
+    unsigned int y = 0;
+
+    while (y < VGA_HEIGHT){
+        x = 0;
+        while (x < VGA_WIDTH){
+            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(kbg_color, 0);
+            x++;
+        }
+        y++;
+    }
+    vga_area_head = ((uint16_t*)VGA_AREA);
+}
