@@ -21,7 +21,8 @@ void remove_entry(){
     prompt.buffer[prompt.size] = '\0';
     prompt.size--;
     move_cursor(ARROW_LEFT);
-    *vga_area_head = VGA_ASCII(kbg_color, 1, '\0');
+    kputchar('\0', ktext_color, 0);
+    move_cursor(ARROW_LEFT);
 }
 
 void exec_cmd(){
