@@ -5,5 +5,6 @@ void reboot();
 void halt();
 void cbgcolor(char *arg);
 void ctcolor(char *arg);
+void clear();
 
 #endif

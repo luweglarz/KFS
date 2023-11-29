@@ -41,19 +41,38 @@ static int check_color(char *color){
 void cbgcolor(char *arg){
     int color = check_color(arg);
     if (color == -1){
-        kprintf("\nWrong argument", LIGHT_GRAY_COLOR, 1);
+        kprintf("Wrong argument\n", LIGHT_GRAY_COLOR, 1);
         return ;
     }
-    change_bg_color(color, 0);
     kbg_color = color;
+    //change_bg_color(color, 0);
+    //kbg_color = color;
+     unsigned int x = 0;
+    unsigned int y = 0;
+
+    while (y < VGA_HEIGHT){
+        x = 0;
+        while (x < VGA_WIDTH){
+            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(kbg_color, 0);
+            x++;
+        }
+        y++;
+    }
+    vga_area_head = ((uint16_t*)VGA_AREA);
 }
 
 void ctcolor(char *arg){
     int color = check_color(arg);
 
     if (color == -1){
-        kprintf("\nWrong argument", LIGHT_GRAY_COLOR, 1);
+        kprintf("Wrong argument\n", LIGHT_GRAY_COLOR, 1);
         return ;
     }
     ktext_color = color;
+    change_bg_color();
+}
+
+void clear(){
+    ktext_color = BLACK_COLOR;
+    change_bg_color();
 }

@@ -11,16 +11,17 @@ int kbg_color = BLACK_COLOR;
 void change_bg_color(int color, int bright){
     unsigned int x = 0;
     unsigned int y = 0;
+    char save_char = 0;
 
     while (y < VGA_HEIGHT){
         x = 0;
         while (x < VGA_WIDTH){
-            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) |= VGA_BG(color, color);
+            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(color, bright);
             x++;
         }
         y++;
     }
-    vga_area_head = ((uint16_t*)VGA_AREA) ;    
+    vga_area_head = ((uint16_t*)VGA_AREA);
 }
 
 void init_cursor(uint8_t sl_start, uint8_t sl_end){

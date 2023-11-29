@@ -3,7 +3,7 @@
 
 #include "klib.h"
 
-# define BUILTINS_SIZE 4
+# define BUILTINS_SIZE 5
 
 typedef struct  s_kprompt{
     char        buffer[3993];
