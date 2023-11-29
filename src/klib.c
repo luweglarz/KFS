@@ -2,29 +2,32 @@
 #include "kscreen.h"
 #include "keyboard.h"
 
+extern void print_stack_kernel(unsigned int MaxFrames);
+
+
 void kputchar(char c, int color, int bright){
-    if (vga_area_head == (uint16_t*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
-        return ;
-    *vga_area_head = VGA_ASCII(color, bright, c);
+	if (vga_area_head == (uint16_t*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
+		return ;
+	*vga_area_head = VGA_ASCII(color, bright, c);
 	*vga_area_head |= VGA_BG(kbg_color, 0);
 	move_cursor(ARROW_RIGHT);
- }
+}
 
 unsigned int kprintf(char *str, int color, int bright){
-    int cnt = 0;
+	int cnt = 0;
 
-    while (*str != '\0'){
-        if (*str == '\n'){
-            vga_area_head = (uint16_t*)VGA_JMP_LINE;
-            str++;
-            continue ;
-        }
-        kputchar(*str, color, bright);
-        str++;
-        cnt++;
-    }
-    return (cnt);
- }
+	while (*str != '\0'){
+		if (*str == '\n'){
+			vga_area_head = (uint16_t*)VGA_JMP_LINE;
+			str++;
+			continue ;
+		}
+		kputchar(*str, color, bright);
+		str++;
+		cnt++;
+	}
+	return (cnt);
+}
 
 int	kstrncmp(const char *s1, const char *s2, unsigned int n){
 	unsigned int i = 0;
@@ -93,10 +96,10 @@ static int	number_size(int nb)
 
 char *kitoa(int n, char *dest){
 	unsigned int size = number_size(n);
-    char         *ret_addr = dest;
-    char         *itr_addr = dest;
+	char         *ret_addr = dest;
+	char         *itr_addr = dest;
 
-    itr_addr[size--] = '\0';
+	itr_addr[size--] = '\0';
 	if (n == 0)
 		itr_addr[0] = '0';
 	if (n < 0)
@@ -113,4 +116,17 @@ char *kitoa(int n, char *dest){
 	return (ret_addr);
 }
 
-
+void print_stack_kernel(unsigned int MaxFrames)
+{
+	struct stackframe *stk;
+	char buff[255];
+	MaxFrames = 10;
+	asm volatile ("movl %%ebp,%0" : "=r"(stk) ::); // put ebp in stk struct
+	kprintf("Stack trace: ", LIGHT_GRAY_COLOR, 1);
+	for(unsigned int frame = 0; stk && frame < MaxFrames; ++frame)
+	{
+		kprintf(kitoa(stk->eip, buff), LIGHT_GRAY_COLOR, 1);
+		kputchar(' ',BLACK_COLOR, 1);
+		stk = stk->ebp;
+	}
+}

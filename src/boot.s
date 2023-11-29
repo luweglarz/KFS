@@ -8,14 +8,25 @@ align 4
   dd FLAGS
   dd -MAGIC_NUMBER - FLAGS
 
-section .text:
+
+;;section .bss
+ ;;align 16
+;;stack_bottom:
+;;resb 16384
+;;stack_top:
+
+
+
+section .text
 
 extern main
 extern irq_handler
+extern print_stack_kernel
 
 global start_kernel
 global gdt_flush
 global idt_flush
+global stack_frame
 
 gdt_flush:
    mov eax, [esp+4]  
@@ -74,5 +85,13 @@ irq_common_stub:
    sti
    iret    
 
+stack_frame:
+  push ebp
+  call print_stack_kernel
+  pop  ebp
+  ret
+
 start_kernel:
+;;  mov esp, stack_top
+;;  xor ebp, ebp
   call main

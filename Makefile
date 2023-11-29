@@ -19,7 +19,8 @@ CC_FLAGS = 	-fno-builtin \
 			-nostdlib \
 			-nodefaultlibs \
 			-ffreestanding  \
-			-m32 
+			-m32 \
+			-fno-omit-frame-pointer
 
 SRCS := $(wildcard ./src/*.c)
 
