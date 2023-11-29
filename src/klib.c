@@ -58,6 +58,20 @@ void	*kmemset(void *s, int c, unsigned int n){
 	return (s);
 }
 
+void	*kmemcpy(void *dst, const void *src, unsigned int n) {
+	unsigned int i;
+
+	i = 0;
+	if(src && dst)
+	{
+		while (i < n) {
+			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+			i++;
+		}
+	}
+	return dst;
+}
+
 static int	number_size(int nb)
 {
 	int	size;
