@@ -26,14 +26,14 @@ SRCS := $(wildcard ./src/*.c)
 OBJS = $(SRCS:.c=.o)
 
 .c.o:
-	$(CC) $(CC_FLAGS) -I./include -c $< -o $@ -ggdb
+	$(CC) $(CC_FLAGS) -I./include -g -c $< -o $@ -ggdb
 
 all: $(ISO_NAME)
 
 $(EXEC_FILE): $(OBJS)
 	@echo "$(GREEN)Compiling the elf file$(NC)"
-	$(ASM) $(ASM_FLAGS) src/boot.s -o src/boot.o
-	i386-elf-ld -melf_i386 -T linker/linker.ld src/boot.o $(OBJS)
+	$(ASM) $(ASM_FLAGS) -g src/boot.s -o src/boot.o
+	i386-elf-ld -melf_i386 -T linker/linker.ld src/boot.o $(OBJS) -g
 
 $(ISO_NAME): $(EXEC_FILE)
 	@echo "$(GREEN)Building the ISO image$(NC)"

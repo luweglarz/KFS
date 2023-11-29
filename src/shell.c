@@ -21,7 +21,7 @@ void remove_entry(){
     prompt.buffer[prompt.size] = '\0';
     prompt.size--;
     move_cursor(ARROW_LEFT);
-    kputchar('\0', ktext_color, 0);
+    kputchar('\0', ktext_color, 1);
     move_cursor(ARROW_LEFT);
 }
 
@@ -50,5 +50,8 @@ void exec_cmd(){
 void init_shell(){
     kmemset(prompt.buffer, '\0', sizeof(prompt.buffer));
     prompt.size = 0;
-    kprintf("kshell>", GREEN_COLOR, 0);
+    if (kbg_color == GREEN_COLOR)
+        kprintf("kshell>", BLACK_COLOR, 0);
+    else
+        kprintf("kshell>", GREEN_COLOR, 0);
 }
