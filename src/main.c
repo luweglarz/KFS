@@ -15,11 +15,9 @@ void loop_f(void)
 int main(void){
    init_descriptor_tables();
    init_keyboard();
-   init_shell();
-
 //   loop_f();
-
    print_stack_kernel(20);
+   init_shell();
    for(;;);
 }
 

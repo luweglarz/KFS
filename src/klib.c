@@ -12,8 +12,6 @@ data_t fdata[] = {
 	[1].name = "start_kernel"
 };
 
-
-
 void kputchar(char c, int color, int bright){
 	if (vga_area_head == (uint16_t*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
 		return ;
@@ -103,12 +101,16 @@ static int	number_size(int nb)
 	return (size);
 }
 
-char *kitoa(int n, char *dest){
-	unsigned int size = number_size(n);
+char *kitoa(int n, char *dest, char *base){
+	unsigned int size = 0;
 	char         *ret_addr = dest;
 	char         *itr_addr = dest;
+	int			  base_len = kstrlen(base);
+	int			  save_n = n;
 
-	itr_addr[size--] = '\0';
+	while(save_n /= base_len)
+		size++;
+	itr_addr[size + 1] = '\0';
 	if (n == 0)
 		itr_addr[0] = '0';
 	if (n < 0)
@@ -118,8 +120,8 @@ char *kitoa(int n, char *dest){
 	}
 	while (n != 0)
 	{
-		itr_addr[size] = (n % 10) + '0';
-		n = n / 10;
+		itr_addr[size] = base[n % base_len];
+		n = n / base_len;
 		itr_addr--;
 	}
 	return (ret_addr);
@@ -153,16 +155,17 @@ void names_resolver(unsigned int return_addr)
 		kprintf("?????", LIGHT_GRAY_COLOR, 1);
 }
 
-void print_stack_kernel(unsigned int MaxFrames)
+void print_stack_kernel(unsigned int max_frames)
 {
 	struct stackframe *stk;
 	char buff[255];
-	MaxFrames = 10;
+	max_frames = 10;
 	asm volatile ("movl %%ebp,%0" : "=r"(stk) ::); // put ebp in stk struct
 	kprintf("Stack trace. \n", LIGHT_GRAY_COLOR, 1);
-	for(unsigned int frame = 0; stk && frame < MaxFrames; ++frame)
+	for(unsigned int frame = 0; stk && frame < max_frames; ++frame)
 	{
-		kprintf(kitoa(stk->eip, buff), LIGHT_GRAY_COLOR, 1);
+		kprintf("0x", LIGHT_GRAY_COLOR, 1);
+		kprintf(kitoa(stk->eip, buff, "0123456789abcdef"), LIGHT_GRAY_COLOR, 1);
 		kprintf(" : ", LIGHT_GRAY_COLOR, 1);
 		names_resolver(stk->eip);
 		kprintf("\n", LIGHT_GRAY_COLOR, 1);

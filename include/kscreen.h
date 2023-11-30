@@ -9,5 +9,6 @@ extern int kbg_color;
 void change_bg_color();
 void init_cursor(uint8_t sl_start, uint8_t sl_end);
 void move_cursor(int direction);
+uint16_t get_cursor_pos();
 
 #endif 

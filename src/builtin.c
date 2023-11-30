@@ -45,20 +45,7 @@ void cbgcolor(char *arg){
         return ;
     }
     kbg_color = color;
-    //change_bg_color(color, 0);
-    //kbg_color = color;
-     unsigned int x = 0;
-    unsigned int y = 0;
-
-    while (y < VGA_HEIGHT){
-        x = 0;
-        while (x < VGA_WIDTH){
-            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(kbg_color, 0);
-            x++;
-        }
-        y++;
-    }
-    vga_area_head = ((uint16_t*)VGA_AREA);
+    change_bg_color(color, 0);
 }
 
 void ctcolor(char *arg){
@@ -69,10 +56,8 @@ void ctcolor(char *arg){
         return ;
     }
     ktext_color = color;
-    change_bg_color();
 }
 
 void clear(){
-    ktext_color = BLACK_COLOR;
-    change_bg_color();
+    change_bg_color(kbg_color, 0);
 }

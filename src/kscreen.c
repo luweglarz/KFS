@@ -11,7 +11,6 @@ int kbg_color = BLACK_COLOR;
 void change_bg_color(int color, int bright){
     unsigned int x = 0;
     unsigned int y = 0;
-    char save_char = 0;
 
     while (y < VGA_HEIGHT){
         x = 0;
@@ -32,7 +31,7 @@ void init_cursor(uint8_t sl_start, uint8_t sl_end){
 	outb(0x3D5, (inb(0x3D5) & 0xE0) | sl_end);
 }
 
-static uint16_t get_cursor_pos(){
+uint16_t get_cursor_pos(){
     uint16_t cursor_pos = (uint16_t)vga_area_head;
     cursor_pos -= (uint16_t)VGA_AREA;
     cursor_pos /= 2;

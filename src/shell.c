@@ -28,7 +28,8 @@ void remove_entry(){
 void exec_cmd(){
     int i = 0;
 
-    vga_area_head = (uint16_t*)VGA_JMP_LINE;
+    if ((get_cursor_pos() + VGA_WIDTH) < (VGA_HEIGHT * VGA_WIDTH) / 2 - 1)
+        vga_area_head = (uint16_t*)VGA_JMP_LINE;
     while (i < BUILTINS_SIZE){
         if (kstrncmp(prompt.buffer, builtin[i].name, kstrlen(builtin[i].name)) == 0 
             && kstrlen(builtin[i].name) == prompt.size){
@@ -49,6 +50,8 @@ void exec_cmd(){
 }
 
 void init_shell(){
+    if ((get_cursor_pos() + VGA_WIDTH) >= (VGA_HEIGHT * VGA_WIDTH) / 2 + 1)
+        return ;
     kmemset(prompt.buffer, '\0', sizeof(prompt.buffer));
     prompt.size = 0;
     if (kbg_color == GREEN_COLOR)

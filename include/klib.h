@@ -12,13 +12,13 @@
  #include "vga.h"
 
 void            kputchar(char c, int color, int bright);
-unsigned int kprintf(char *str, int color, int bright);
+unsigned int    kprintf(char *str, int color, int bright);
 int	            kstrncmp(const char *s1, const char *s2, unsigned int n);
 unsigned int    kstrlen(const char *s);
 void	        *kmemset(void *s, int c, unsigned int n);
-char            *kitoa(int n, char *dest);
-void	*kmemcpy(void *dst, const void *src, unsigned int n);
-void print_stack_kernel(unsigned int MaxFrames);
+char            *kitoa(int n, char *dest, char *base);
+void	        *kmemcpy(void *dst, const void *src, unsigned int n);
+void            print_stack_kernel(unsigned int max_frames);
 
 int	main(void);
 
