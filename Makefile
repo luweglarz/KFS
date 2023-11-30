@@ -51,7 +51,7 @@ run-iso-debug: $(ISO_NAME)
 	qemu-system-i386 -s -S -cdrom $(ISO_NAME)
 
 clean:
-	rm -f $(OBJS) src/boot.o
+	rm -f $(OBJS) src/boot.o output.map
 	rm -f $(EXEC_FILE)
 	rm -rf iso
 	rm -f $(ISO_NAME)

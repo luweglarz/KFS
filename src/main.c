@@ -6,12 +6,20 @@
 
 extern void stack_frame(void);
 
+void loop_f(void)
+{
+  print_stack_kernel(20);
+  for(;;);
+}
+
 int main(void){
    init_descriptor_tables();
    init_keyboard();
    init_shell();
 
-   stack_frame();
+//   loop_f();
 
+   print_stack_kernel(20);
    for(;;);
 }
+
