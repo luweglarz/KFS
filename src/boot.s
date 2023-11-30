@@ -8,6 +8,13 @@ align 4
   dd FLAGS
   dd -MAGIC_NUMBER - FLAGS
 
+
+section .bss
+align 16
+stack_bottom:
+resb 16384
+stack_top:
+
 section .text
 
 extern main
@@ -78,5 +85,7 @@ irq_common_stub:
 
 
 start_kernel:
+  mov esp, stack_top
+  xor ebp, ebp
   call main
 
