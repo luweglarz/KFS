@@ -2,30 +2,34 @@
 #include "klib.h"
 #include "descriptor_tables.h"
 #include "keyboard.h"
+#include "kscreen.h"
 
 uint16_t *vga_area_head = ((uint16_t*)VGA_AREA);
+int ktext_color = LIGHT_GRAY_COLOR;
+int kbg_color = BLACK_COLOR;
 
-void clear_screen(){
+void change_bg_color(int color, int bright){
     unsigned int x = 0;
     unsigned int y = 0;
+    char save_char = 0;
 
     while (y < VGA_HEIGHT){
         x = 0;
         while (x < VGA_WIDTH){
-            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(BLACK_COLOR, 0);
+            *((uint16_t*)VGA_AREA + VGA_POSITION(x, y)) = VGA_BG(color, bright);
             x++;
         }
         y++;
     }
-    vga_area_head = ((uint16_t*)VGA_AREA) ;    
+    vga_area_head = ((uint16_t*)VGA_AREA);
 }
 
 void init_cursor(uint8_t sl_start, uint8_t sl_end){
-    outb(0x3D4, 0x0A);                              // Telling VGA controller that we work on Cursor Start register (0x0A)
-	outb(0x3D5, (inb(0x3D5) & 0xC0) | sl_start);    // Modifying Cursor Scan Line Start
+    outb(0x3D4, 0x0A);                              
+	outb(0x3D5, (inb(0x3D5) & 0xC0) | sl_start); 
  
-	outb(0x3D4, 0x0B);                              // Telling VGA controller that we work on Cursor End register (0x0A)
-	outb(0x3D5, (inb(0x3D5) & 0xE0) | sl_end);      // Modifying Cursor Scan Line End
+	outb(0x3D4, 0x0B);                             
+	outb(0x3D5, (inb(0x3D5) & 0xE0) | sl_end);
 }
 
 static uint16_t get_cursor_pos(){

@@ -18,6 +18,7 @@ void kputchar(char c, int color, int bright){
 	if (vga_area_head == (uint16_t*)(VGA_AREA + (VGA_WIDTH * VGA_HEIGHT)))
 		return ;
 	*vga_area_head = VGA_ASCII(color, bright, c);
+	*vga_area_head |= VGA_BG(kbg_color, 0);
 	move_cursor(ARROW_RIGHT);
 }
 

@@ -3,7 +3,7 @@
 
 #include "klib.h"
 
-# define BUILTINS_SIZE 3
+# define BUILTINS_SIZE 5
 
 typedef struct  s_kprompt{
     char        buffer[3993];
@@ -14,7 +14,7 @@ extern kprompt prompt;
 
 typedef struct  s_kbuiltin{
     const char    name[128];
-    void          (*builtin_func)();
+    void          (*builtin_func)(char *arg);
 }               kbuiltin;
 
 extern kbuiltin builtin[BUILTINS_SIZE];

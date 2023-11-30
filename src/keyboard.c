@@ -128,7 +128,7 @@ void keyboard_handler(registers_t regs)
 	unsigned char press = inb(DATA_KEYBOARD) & 0x80;
 	int ret = upper_lower_case_check(scan_code, press);
 
-	if(press == 0 && (scan_code == ARROW_LEFT || scan_code == ARROW_RIGHT || scan_code == ARROW_UP || scan_code == ARROW_DOWN))
+	if(press == 0 && (scan_code == ARROW_LEFT || scan_code == ARROW_RIGHT))
 	{
 		move_cursor(scan_code);
 	}
