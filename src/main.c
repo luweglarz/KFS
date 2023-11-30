@@ -19,7 +19,7 @@ int main(void){
 
 //   loop_f();
 
-   print_stack_kernel(3);
+   print_stack_kernel(20);
    for(;;);
 }
 
