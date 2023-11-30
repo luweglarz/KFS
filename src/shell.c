@@ -35,7 +35,8 @@ void exec_cmd(){
             builtin[i].builtin_func(0);
             break ;
         }
-        else if (kstrncmp(prompt.buffer, builtin[i].name, kstrlen(builtin[i].name)) == 0){
+        else if (kstrncmp(prompt.buffer, builtin[i].name, kstrlen(builtin[i].name)) == 0 &&
+                prompt.buffer[kstrlen(builtin[i].name)] == ' '){
             char *arg = prompt.buffer + kstrlen(builtin[i].name);
             while (*arg == ' ')
                 arg++;
