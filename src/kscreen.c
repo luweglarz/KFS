@@ -25,11 +25,11 @@ void change_bg_color(int color, int bright){
 }
 
 void init_cursor(uint8_t sl_start, uint8_t sl_end){
-    outb(0x3D4, 0x0A);                              // Telling VGA controller that we work on Cursor Start register (0x0A)
-	outb(0x3D5, (inb(0x3D5) & 0xC0) | sl_start);    // Modifying Cursor Scan Line Start
+    outb(0x3D4, 0x0A);                              
+	outb(0x3D5, (inb(0x3D5) & 0xC0) | sl_start); 
  
-	outb(0x3D4, 0x0B);                              // Telling VGA controller that we work on Cursor End register (0x0A)
-	outb(0x3D5, (inb(0x3D5) & 0xE0) | sl_end);      // Modifying Cursor Scan Line End
+	outb(0x3D4, 0x0B);                             
+	outb(0x3D5, (inb(0x3D5) & 0xE0) | sl_end);
 }
 
 static uint16_t get_cursor_pos(){
