@@ -18,6 +18,9 @@ unsigned int    kstrlen(const char *s);
 void	        *kmemset(void *s, int c, unsigned int n);
 char            *kitoa(int n, char *dest);
 void	*kmemcpy(void *dst, const void *src, unsigned int n);
+void print_stack_kernel(unsigned int MaxFrames);
+
+int	main(void);
 
 static inline void outb(unsigned short port, unsigned char val)
 {
@@ -42,5 +45,11 @@ struct stackframe {
 	struct stackframe *ebp;
 	unsigned long eip;
 };
+
+struct data {
+	unsigned int addr;
+	char *name;
+};
+typedef struct data data_t;
 
 #endif

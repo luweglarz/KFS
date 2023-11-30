@@ -3,6 +3,15 @@
 #include "keyboard.h"
 
 extern void print_stack_kernel(unsigned int MaxFrames);
+extern void start_kernel(void);
+
+data_t fdata[] = {
+	[0].addr = (unsigned int)&main,
+	[0].name = "main",
+	[1].addr = (unsigned int)&start_kernel,
+	[1].name = "start_kernel"
+};
+
 
 
 void kputchar(char c, int color, int bright){
@@ -115,17 +124,47 @@ char *kitoa(int n, char *dest){
 	return (ret_addr);
 }
 
+int right_function_name(unsigned int raddr, data_t *data, int len)
+{
+	unsigned int mem = 0;
+	int ret = 0;
+	for (int i = 0; i < len; i++)
+	{
+		if (data[i].addr > mem && data[i].addr < raddr)
+		{
+			mem = data[i].addr;	
+			ret = i;
+		}
+	}
+	if (raddr - mem >= 45)
+		ret = -1;
+	return ret;
+}
+
+void names_resolver(unsigned int return_addr)
+{
+	int ret = 0;
+	ret = right_function_name(return_addr, fdata, 2);
+
+	if(ret != -1)
+		kprintf(fdata[ret].name, LIGHT_GRAY_COLOR, 1);
+	else
+		kprintf("?????", LIGHT_GRAY_COLOR, 1);
+}
+
 void print_stack_kernel(unsigned int MaxFrames)
 {
 	struct stackframe *stk;
 	char buff[255];
 	MaxFrames = 10;
 	asm volatile ("movl %%ebp,%0" : "=r"(stk) ::); // put ebp in stk struct
-	kprintf("Stack trace: ", LIGHT_GRAY_COLOR, 1);
+	kprintf("Stack trace. \n", LIGHT_GRAY_COLOR, 1);
 	for(unsigned int frame = 0; stk && frame < MaxFrames; ++frame)
 	{
 		kprintf(kitoa(stk->eip, buff), LIGHT_GRAY_COLOR, 1);
-		kputchar(' ',BLACK_COLOR, 1);
+		kprintf(" : ", LIGHT_GRAY_COLOR, 1);
+		names_resolver(stk->eip);
+		kprintf("\n", LIGHT_GRAY_COLOR, 1);
 		stk = stk->ebp;
 	}
 }

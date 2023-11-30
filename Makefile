@@ -34,7 +34,7 @@ all: $(ISO_NAME)
 $(EXEC_FILE): $(OBJS)
 	@echo "$(GREEN)Compiling the elf file$(NC)"
 	$(ASM) $(ASM_FLAGS) src/boot.s -o src/boot.o
-	i386-elf-ld -melf_i386 -T linker/linker.ld src/boot.o $(OBJS)
+	i386-elf-ld -Map output.map -melf_i386 -T linker/linker.ld src/boot.o $(OBJS)
 
 $(ISO_NAME): $(EXEC_FILE)
 	@echo "$(GREEN)Building the ISO image$(NC)"
@@ -51,7 +51,7 @@ run-iso-debug: $(ISO_NAME)
 	qemu-system-i386 -s -S -cdrom $(ISO_NAME)
 
 clean:
-	rm -f $(OBJS) src/boot.o
+	rm -f $(OBJS) src/boot.o output.map
 	rm -f $(EXEC_FILE)
 	rm -rf iso
 	rm -f $(ISO_NAME)
